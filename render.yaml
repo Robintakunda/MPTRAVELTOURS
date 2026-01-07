@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: mp-travel-tours
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mp-travel-db
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: RESEND_API_KEY
+        sync: false # You will need to add this in the Render dashboard
+
+databases:
+  - name: mp-travel-db
+    databaseName: mptravel
+    user: mptravel_user
+    plan: free # Change to 'standard' for production use
